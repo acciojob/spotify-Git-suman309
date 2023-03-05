@@ -1,0 +1,7 @@
+[POST]
+localhost:8080/spotify/add-user?name="riya"  +  inbody  {"mobile":"7004633964" }  // coz only one request param
+localhost:8080/spotify/add-artist?name="xyz"
+localhost:8081/spotify/add-album?title="xyz" +  body { "name":"artistName" }
+
+
+

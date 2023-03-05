@@ -38,36 +38,87 @@ public class SpotifyRepository {
     }
 
     public User createUser(String name, String mobile) {
+        User user = new User();
+        user.setName(name);
+        user.setMobile(mobile);
+        users.add(user);
+        return user;
     }
 
     public Artist createArtist(String name) {
-    }
-
-    public Album createAlbum(String title, String artistName) {
-    }
-
-    public Song createSong(String title, String albumName, int length) throws Exception{
-    }
-
-    public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
+        Artist artist = new Artist();
+        artist.setName(name);
+        artist.setLikes(0);
+        artists.add(artist);
+        return artist;
 
     }
 
-    public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
+    public Album createAlbum(String title, String artistName) { //album Must has [ title & artistName ]
+        Artist artist_x = null;
 
+        for(Artist artist:artists){ // check existing artist
+            if(artist.getName()==artistName){
+                artist_x=artist;
+                break;
+            }
+        }
+        if(artist_x==null){ //not found any existing artist creat new one
+            artist_x = createArtist(artistName);
+
+            Album album = new Album();
+
+            album.setTitle(title);
+            album.setReleaseDate(new Date());
+
+            albums.add(album);
+
+            List<Album> l = new ArrayList<>();
+            l.add(album);
+            artistAlbumMap.put(artist_x,l);
+
+            return album;
+        }else { // found----------------
+            Album album = new Album();
+
+            album.setTitle(title);
+            album.setReleaseDate(new Date());
+
+            albums.add(album);
+
+            List<Album> l = artistAlbumMap.get(artist_x);
+            if(l == null){
+                l = new ArrayList<>();
+            }
+            l.add(album);
+            artistAlbumMap.put(artist_x,l);
+
+            return album;
+        }
     }
-
-    public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
-
-    }
-
-    public Song likeSong(String mobile, String songTitle) throws Exception {
-
-    }
-
-    public String mostPopularArtist() {
-    }
-
-    public String mostPopularSong() {
-    }
+//
+//    public Song createSong(String title, String albumName, int length) throws Exception{
+//    }
+//
+//    public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
+//
+//    }
+//
+//    public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
+//
+//    }
+//
+//    public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
+//
+//    }
+//
+//    public Song likeSong(String mobile, String songTitle) throws Exception {
+//
+//    }
+//
+//    public String mostPopularArtist() {
+//    }
+//
+//    public String mostPopularSong() {
+//    }
 }
